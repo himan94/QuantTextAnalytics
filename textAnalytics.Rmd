@@ -13,6 +13,25 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Text analytics is
 
+### Dealing with unstructured data 
+
+Some common steps in dealing with unstructured data are:
+
+text mining are as below
+
+* Information Retrieval
+* Data preparation and cleaning
+* Segmentation
+* Tokenization
+* Stop-word numbers and punctuation removal
+* Convert to lowercase
+
+* Stemming
+* POS tagging
+* Create text corpus
+* Term-Document matrix
+
+
 
 Effective workflow for text analytics
 

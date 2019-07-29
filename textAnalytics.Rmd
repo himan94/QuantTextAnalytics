@@ -1,0 +1,29 @@
+---
+title: "QuantTextAnalytics"
+author: "MariaProkofieva"
+date: "29/07/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Quantitative Text Analytics
+
+Text analytics is
+
+
+Effective workflow for text analytics
+
+
+Tidytool ecosystem library
+how to integrate natural language processing
+Sentiment analysis
+td-idf
+network analysis of words
+supervised text models
+unsupervised text models
+
+
+

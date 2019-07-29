@@ -11,8 +11,10 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Quantitative Text Analytics
 
-Text analytics is
+Text analytics refers to applying statistical and machine learning techniques to describe or/and predict (infer?) any information from the data
 
+Data mining preceeds text analytics and refers to cleaning and data preparation. It is roughly ETL (Extract Transfer Load) which is transform the unstructured text into a structured data
+***
 ### Dealing with unstructured data 
 
 Some common steps in dealing with unstructured data are:
@@ -26,14 +28,42 @@ text mining are as below
 * Stop-word numbers and punctuation removal
 * Convert to lowercase
 
-* Stemming
+* Converting to a "structured" form
+
+    + Option 1 - tf df matrix:
+    + Option 2 - tibble
+
+
+tf df matrix approach:
+
+* Stemming / 
 * POS tagging
 * Create text corpus
 * Term-Document matrix
 
+***
+### Effective workflow for text analytics
+Once the structured format is achieved, the data can go through 
+
+* Modeling: inferential models, predictive models or prescriptive models
+* Training and evaluation of models
+* Application of these Models
+* Visualizing the Models
+
+Examples of text analytics: association analysis:
+
+* visualization
+* predictive analytics
+* information retrieval
+* lexical analysis
+* patten recognition
+* tagging/annotation
+
+## Text analytics techniques
 
 
-Effective workflow for text analytics
+
+
 
 
 Tidytool ecosystem library

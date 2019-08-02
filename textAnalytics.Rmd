@@ -49,6 +49,10 @@ Once the structured format is achieved, the data can go through
 * Training and evaluation of models
 * Application of these Models
 * Visualizing the Models
+* Google Cloud - Natural language API
+
+
+
 
 Examples of text analytics: association analysis:
 

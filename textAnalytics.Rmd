@@ -60,7 +60,7 @@ Examples of text analytics: association analysis:
 * predictive analytics
 * information retrieval
 * lexical analysis
-* patten recognition
+* pattern recognition
 * tagging/annotation
 
 ## Text analytics techniques
@@ -79,4 +79,12 @@ supervised text models
 unsupervised text models
 
 
+##td-idf
+*term frequency–inverse document frequency*
+
+* statistical measure 
+
+* shows importance of a word is in  a document in a collection of documents (corpus)
+
+* the more times a word is used in a document, the higher the importance, but also how often a word appears in the corpus.
 

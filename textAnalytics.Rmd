@@ -16,11 +16,25 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Basics:
 
-*Corpus* - Body of text, singular. Corpora is the plural of this. Example: A collection of medical journals.
+*Corpus*: body of text
 
-*Token*- Each "entity" that is a part of whatever was split up based on rules. For examples, each word is a token when a sentence is "tokenized" into words. Each sentence can also be a token, if you tokenized the sentences out of a paragraph.
+*Token*: smallest unit of the text, e.g. words within a sentence, sentence within a text.
 
-*Lexicon* - Words and their meanings. Example: English dictionary. Consider, however, that various fields will have different lexicons. For example: To a financial investor, the first meaning for thef word "Bull" is someone who is confident about the market, as compared to the common English lexicon, where the first meaning for the word "Bull" is an animal. As such, there is a special lexicon for financial investors, doctors, children, mechanics, and so on.
+*Lexicon*: collection of words and their meanings. 
+
+
+*Which token?*
+a sentence, word, n-gram, morpheme, letter
+
+Multidimensionality and sparseness of the data:
+- Number of words -> dimensions of data
+- Most word frequences are zero
+
+Depends on 
+- tasks
+- their specification
+- heuristics
+- preconditions
 
 ## Bag-of-words (BoW) vs sequential representation (SR) of text 
 Data-centric aspects: 

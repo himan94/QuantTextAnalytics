@@ -11,9 +11,47 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Quantitative Text Analytics
 
-Text analytics refers to applying statistical and machine learning techniques to describe or/and predict (infer?) any information from the data
+*Text analytics* refers to applying statistical and machine learning techniques to extract useful insights from text 
 
-Data mining preceeds text analytics and refers to cleaning and data preparation. It is roughly ETL (Extract Transfer Load) which is transform the unstructured text into a structured data
+
+Basics:
+
+*Corpus* - Body of text, singular. Corpora is the plural of this. Example: A collection of medical journals.
+
+*Token*- Each "entity" that is a part of whatever was split up based on rules. For examples, each word is a token when a sentence is "tokenized" into words. Each sentence can also be a token, if you tokenized the sentences out of a paragraph.
+
+*Lexicon* - Words and their meanings. Example: English dictionary. Consider, however, that various fields will have different lexicons. For example: To a financial investor, the first meaning for thef word "Bull" is someone who is confident about the market, as compared to the common English lexicon, where the first meaning for the word "Bull" is an animal. As such, there is a special lexicon for financial investors, doctors, children, mechanics, and so on.
+
+## Bag-of-words (BoW) vs sequential representation (SR) of text 
+Data-centric aspects: 
+- length of the text: small for SR, longer for BoW
+
+Application-centric aspects:
+- method requires to treat sentences as sentences -> SR
+e.g. text summarization, information extraction, opinion mining, and question answering
+
+*BoW* 
+- most commonly used representation for text mining
+- the ordering of words is lost
+- text is converted to a sparse multidimensional representation: the universe of words (or terms) are dimensions (or features) 
+- **Application**: classification, topic-modeling, and recommender systems
+
+*SR*
+- the ordering is preserved: localized within sentence or paragraph boundaries
+- text is a collection of smaller units, e.g. sentences, paragraphs 
+- individual sentences are extracted as strings or sequences. 
+- **Application**: language modeling, natural language processing
+
+*Language Modeling*:probabilistic models that are able to predict the next word in the sequence given the words that precede it.
+
+Uses: Machine Translation, spell Correction, speech Recognition, summarization, question answering, sentiment analysis etc.
+
+
+
+
+Data mining preceeds text analytics and refers to cleaning and data preparation: transformation of the unstructured text into a structured data
+
+
 ***
 ### Dealing with unstructured data 
 

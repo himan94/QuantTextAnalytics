@@ -9,7 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Quantitative Text Analytics
+# Quantitative Text Analytics
 
 *Text analytics* refers to applying statistical and machine learning techniques to extract useful insights from text 
 
@@ -22,6 +22,15 @@ Basics:
 
 *Lexicon*: collection of words and their meanings. 
 
+BoW
+ dimensions are words, values are their frequences
+
+Corpus: a data set = collection of documents
+Lexicon:complete and distinct set of words used to define the corpus
+
+High-dimensional, sparse, and non-negative representation
+Dimensions: binary representation: 1 = the presence of a term in a document, 0, otherwise. 
+most values of the dimensions are 0s, and only a few dimensions take on positive values
 
 *Which token?*
 a sentence, word, n-gram, morpheme, letter
@@ -60,7 +69,8 @@ e.g. text summarization, information extraction, opinion mining, and question an
 
 Uses: Machine Translation, spell Correction, speech Recognition, summarization, question answering, sentiment analysis etc.
 
-
+## Text Preprocessing 
+1. Text extraction
 
 
 Data mining preceeds text analytics and refers to cleaning and data preparation: transformation of the unstructured text into a structured data
@@ -68,10 +78,6 @@ Data mining preceeds text analytics and refers to cleaning and data preparation:
 
 ***
 ### Dealing with unstructured data 
-
-Some common steps in dealing with unstructured data are:
-
-text mining are as below
 
 * Information Retrieval
 * Data preparation and cleaning
@@ -95,6 +101,11 @@ tf df matrix approach:
 
 ***
 ### Effective workflow for text analytics
+
+Types of input:
+
+knitr::include_graphics("image/SQ_app.jpg")
+
 Once the structured format is achieved, the data can go through 
 
 * Modeling: inferential models, predictive models or prescriptive models
@@ -103,6 +114,14 @@ Once the structured format is achieved, the data can go through
 * Visualizing the Models
 * Google Cloud - Natural language API
 
+
+
+SQ: 
+Machine Language Translation
+
+Text summarization: customer complaints, customer feedback, monitoring compliance based call, chat monitoring.
+
+Chatbot 
 
 
 

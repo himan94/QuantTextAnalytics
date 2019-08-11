@@ -69,8 +69,15 @@ e.g. text summarization, information extraction, opinion mining, and question an
 
 Uses: Machine Translation, spell Correction, speech Recognition, summarization, question answering, sentiment analysis etc.
 
+## R Packages
+
+- `tidytext`: (0.2.1 version)[https://cran.r-project.org/package=tidytext] big hooray for new plotting functions
+-  (`textdata`)[https://github.com/EmilHvitfeldt/textdata]
+
 ## Text Preprocessing 
-1. Text extraction
+1. Text extraction: remove Web-specific elements
+
+2. Stop-word removal: commonly occurring words with little discriminative power
 
 
 Data mining preceeds text analytics and refers to cleaning and data preparation: transformation of the unstructured text into a structured data

@@ -41,38 +41,103 @@ IMAGE -
 
 
 
+-------
 
-
-*Text analytics* refers to applying statistical and machine learning techniques to extract useful insights from text 
+**Text analytics** refers to applying statistical and machine learning techniques to extract useful insights from text 
 
 The focus of my research is the use of text analytics for social media data. Businesses are excessively pressed for the need to engage with social media and explore its potential for stakeholders engagement, e.g. customers, shareholders. Companies target to monitor the social media space to understand customers' changes preferences, comptetitors offers, market trends, investors' sentiment.
 
 
+```{r echo=FALSE, out.width=600, fig.cap="Text is messy, but tweets are messier! From https://blog.twitter.com"}
+knitr::include_graphics("image/twitter_language.png")
+```
 
 Basics:
 
-*Corpus*: body of text
-
-*Token*: smallest unit of the text, e.g. words within a sentence, sentence within a text.
-
-*Lexicon*: collection of words and their meanings. 
-
-BoW
+**Bag of Word**: way of representing text data
  dimensions are words, values are their frequences
+- most commonly used representation for text mining
 
-Corpus: a data set = collection of documents
-Lexicon:complete and distinct set of words used to define the corpus
+- the ordering of words is lost
 
-High-dimensional, sparse, and non-negative representation
-Dimensions: binary representation: 1 = the presence of a term in a document, 0, otherwise. 
-most values of the dimensions are 0s, and only a few dimensions take on positive values
+- text is converted to a sparse multidimensional representation: the universe of words (or terms) are dimensions (or features) 
+
+- *Application*: classification, topic-modeling, and recommender systems
+
+```{r echo=FALSE}
+knitr::include_graphics("image/word_order.jpg")
+```
+
+**Sequential representation** of text:
+
+- the ordering is preserved: localized within sentence or paragraph boundaries
+
+- text is a collection of smaller units, e.g. sentences, paragraphs 
+
+- individual sentences are extracted as strings or sequences. 
+
+- *Application*: language modeling, natural language processing
+
+**Bag-of-words (BoW) vs sequential representation (SR)**: 
+- Data-centric aspects: 
+    - length of the text: small for SR, longer for BoW
+
+- Application-centric aspects:
+    - method requires to treat sentences as sentences -> SR, e.g. text summarization, information extraction, opinion mining, and question answering
+
+**Tidy text**: "long" format where information is stored in “a table with one-token-per-row”:
+
+- each variable is a column
+
+- each observation is a row
+
+- each type of observational unit is a table
+
+**Token**: smallest unit of the text, e.g. words within a sentence, sentence within a text.
 
 *Which token?*
 a sentence, word, n-gram, morpheme, letter
 
-Multidimensionality and sparseness of the data:
-- Number of words -> dimensions of data
-- Most word frequences are zero
+
+**Term-document-matrix** (= document-feature matrix)
+
+- statistical measure that shows importance of a word is in  a document in a collection of documents (corpus)
+
+- the more times a word is used in a document, the higher the importance, but also how often a word appears in the corpus.
+
+**Corpus**: a data set = collection of documents
+
+
+*Lexicon*: collection of words and their meanings, complete and distinct set of words used to define the corpus
+
+*TF = Term Frequency*: 
+TF(t) = (Number of times term t appears in a document) / (Total number of terms in the document).
+
+*IDF = Inverse Document Frequency*:
+IDF(t) = log(Total number of documents / Number of documents with term t in it)
+
+*Tf-idf* = TF * IDF
+
+Tf-idf matrix:
+
+- High-dimensional, sparse, and non-negative representation
+
+- Dimensions: binary representation: 1 = the presence of a term in a document, 0, otherwise. 
+most values of the dimensions are 0s, and only a few dimensions take on positive values
+
+-Multidimensionality and sparseness of the data:
+    - Number of words -> dimensions of data
+    - Most word frequences are zero
+
+
+**Language Modeling**: probabilistic models that are able to predict the next word in the sequence given the words that precede it.
+
+Uses: Machine Translation, spell Correction, speech Recognition, summarization, question answering, sentiment analysis etc.
+
+
+
+
+
 
 Depends on 
 - tasks
@@ -80,29 +145,6 @@ Depends on
 - heuristics
 - preconditions
 
-## Bag-of-words (BoW) vs sequential representation (SR) of text 
-Data-centric aspects: 
-- length of the text: small for SR, longer for BoW
-
-Application-centric aspects:
-- method requires to treat sentences as sentences -> SR
-e.g. text summarization, information extraction, opinion mining, and question answering
-
-*BoW* 
-- most commonly used representation for text mining
-- the ordering of words is lost
-- text is converted to a sparse multidimensional representation: the universe of words (or terms) are dimensions (or features) 
-- **Application**: classification, topic-modeling, and recommender systems
-
-*SR*
-- the ordering is preserved: localized within sentence or paragraph boundaries
-- text is a collection of smaller units, e.g. sentences, paragraphs 
-- individual sentences are extracted as strings or sequences. 
-- **Application**: language modeling, natural language processing
-
-*Language Modeling*:probabilistic models that are able to predict the next word in the sequence given the words that precede it.
-
-Uses: Machine Translation, spell Correction, speech Recognition, summarization, question answering, sentiment analysis etc.
 
 ## R Packages
 
@@ -117,81 +159,7 @@ Uses: Machine Translation, spell Correction, speech Recognition, summarization, 
 
 - `quanteda`: by Kenneth Benoit et al. for textual data management and analysis
 
-#Basics
-*TF = Term Frequency*: 
-TF(t) = (Number of times term t appears in a document) / (Total number of terms in the document).
-
-*IDF = Inverse Document Frequency*:
-IDF(t) = log(Total number of documents / Number of documents with term t in it)
-
-*Tf-idf* = TF * IDF
-
-## Text Preprocessing 
-
-* Get your data
-* Preparation and cleaning
-* Segmentation
-* Tokenization
-* Stop-word numbers and punctuation removal
-* Convert to lowercase
-* Converting to a "structured" form
-
-    + Option 1 - tf df matrix:
-    + Option 2 - tibble
-    
-*Keep or remove?*
-Data mining preceeds text analytics and refers to cleaning and data preparation: transformation of the unstructured text into a structured data, e.g. tf-idf matrix. But.. is it all noise?
-
-- Text extraction and removal of web-specific elements
-
-- stop-word removal: commonly occurring words with little discriminative power
-
-### Textual paralanguage - Great, Umm, *Eyeroll*
-Paralanguage (paralinguistics) is a component of meta-communication that may modify meaning, give nuanced meaning, or convey emotion
-
-Textual paralanguage signals informality of the communication and has negative affect on perceptions of brand (company) competence. But when it is used by a brands spokescharacter, there is no negative effects as such communication is already perceived as informal.
-
-#IMAGE - most used # ? !
-
-
-### Emojis
-
-```{r echo=FALSE, out.width=300}
-knitr::include_graphics("image/emojis.png")
-```
-
-Emojis are ideograms and smileys used in electronic messages and web pages. Twitter now supports 1100+ emoji and develops its own project, (Twemoji)[https://github.com/twitter/twemoji], that supports 3,075 emojis
-
-Traditionally thought of as a ultimate elevator pitch for (business promotion)[https://business.twitter.com/en/blog/5-ways-to-increase-your-tweet-engagements-with-emojis.html].
-
-(AirBnb project)[https://christinequan.github.io/airtweets/] : "Describe your dream trip in 3 emojis"
-
-```{r echo=FALSE, out.width=300}
-knitr::include_graphics("image/emojis_airbnb.png")
-```
-
-How-to
-- extract emojis from tweets, use `stringr` 
-- use a dictionary to translate emojis
-- (categorise)[https://emojipedia.org/] emojis
-
-
-
-tf df matrix approach:
-
-* Stemming / 
-* POS tagging
-* Create text corpus
-* Term-Document matrix
-
-
-There is a difference when using `tidytext`, `tm` and `quanteda` packages:
-
-
-
-
-
-However, differences exist between packages as how tf-idf is calculated:
+Interestingly, differences exist between packages, even how some of the "straightforward" steps are done. The example below shows differences inhow tf-idf is calculated:
 
 ```{r, echo=TRUE, error=FALSE, warning=FALSE, message=FALSE}
 library(tm)
@@ -215,7 +183,118 @@ df.count3 <- df %>% unnest_tokens(word, text) %>%
   count(doc, word) %>% 
   cast_dfm(document = doc,term = word, value = n) %>% 
   dfm_tfidf() %>% as.data.frame()
+
+
+
 ```
+
+
+
+## Text Preprocessing 
+
+* Get your data
+* Preparation and cleaning
+* Segmentation
+* Tokenization
+* Stop-word numbers and punctuation removal
+* Convert to lowercase
+* Converting to a "structured" form
+
+    + Option 1 - tf df matrix:
+    + Option 2 - tibble
+    
+    
+    
+*Keep or remove?*
+Data mining preceeds text analytics and refers to cleaning and data preparation: transformation of the unstructured text into a structured data, e.g. tf-idf matrix. But.. is it all noise?
+
+- Text extraction and removal of web-specific elements
+
+- stop-word removal: commonly occurring words with little discriminative power
+
+### Textual paralanguage - Great, Umm, *Eyeroll*
+Paralanguage (paralinguistics) is a component of meta-communication that may modify meaning, give nuanced meaning, or convey emotion
+
+Textual paralanguage signals informality of the communication and has negative affect on perceptions of brand (company) competence. But when it is used by a brands spokescharacter, there is no negative effects as such communication is already perceived as informal.
+
+#IMAGE - most used # ? !
+
+
+### Emojis
+
+```{r echo=FALSE, out.width=300}
+knitr::include_graphics("image/emojis.png")
+```
+
+Emojis are ideograms and smileys used in electronic messages and web pages. Twitter now supports 1100+ emoji and develops its own project, [Twemoji](https://github.com/twitter/twemoji), that supports 3,075 emojis
+
+[Emojitracker](http://emojitracker.com/) monitors the use of emojis on Twitter in realtime. 
+)
+
+```{r echo=FALSE, out.width=300}
+knitr::include_graphics("image/emojitracker.png")
+```
+
+Traditionally thought of as a ultimate elevator pitch for [business promotion](https://business.twitter.com/en/blog/5-ways-to-increase-your-tweet-engagements-with-emojis.html).
+
+[AirBnb project]( https://christinequan.github.io/airtweets/) : "Describe your dream trip in 3 emojis"
+
+```{r echo=FALSE, out.width=300}
+knitr::include_graphics("image/emojis_airbnb.png")
+```
+
+How-to:
+
+- extract emojis from tweets, use `stringr` 
+- use a dictionary to translate emojis - the "full" list of emojis are available [here](https://github.com/iamcal/emoji-data/blob/master/categories.json)
+- [categorise](https://emojipedia.org/) emojis - json file [here](https://github.com/iamcal/emoji-data/blob/master/categories.json)
+
+TOBEDONE-
+https://github.com/STATWORX/blog/blob/master/slackemoji/eval_emoji.R
+
+
+IMAGE: wordcloud of emojis
+IMAGE: most common emojis
+
+IMAGE: most common categories
+knitr::include_graphics("top_image/emoji.png")
+
+#### Sentiment of emojis 
+
+Used in tweets emojis serve a paralanguage function. They are a powerful toolcapable of chaning the meaning of the message:
+
+```{r echo=FALSE, out.width=300}
+knitr::include_graphics("image/emoji_sentiment.jpg")
+```
+
+Let's analyse the sentiment of tweets and compare to 
+
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4671607/
+-TOBEDONE
+
+**Note**: Apart from paralanguage function of emojis, differences exist in how people perceive them!
+A recent study from the University of Minnesota used  that 25 most popular emojis that looked like human faces and asked participants to look at five variations for each one, taken from Apple, Microsoft, and Android.
+The participants were asked to rate each emoji's emotional meaning on a scale of -5 (strongly negative) to 5 (strongly positive). They also described each emoji in words. Here is what they found:
+
+
+```{r echo=FALSE}
+knitr::include_graphics("image/emoji_diff.png")
+```
+
+tf df matrix approach:
+
+* Stemming / 
+* POS tagging
+* Create text corpus
+* Term-Document matrix
+
+
+
+
+
+
+
+
 
 #BoW approaches
 ##Sentiment
@@ -265,26 +344,8 @@ Examples of text analytics: association analysis:
 * pattern recognition
 * tagging/annotation
 
-## Text analytics techniques
 
 
-Tidytool ecosystem library
-how to integrate natural language processing
-Sentiment analysis
-td-idf
-network analysis of words
-supervised text models
-unsupervised text models
-
-
-##td-idf
-*term frequency–inverse document frequency*
-
-* statistical measure 
-
-* shows importance of a word is in  a document in a collection of documents (corpus)
-
-* the more times a word is used in a document, the higher the importance, but also how often a word appears in the corpus.
 
 #Text generation
 
@@ -296,3 +357,8 @@ library(keras)
 library(tidyverse)
 library(janeaustenr)
 library(tokenizers)
+
+
+## Resources
+
+

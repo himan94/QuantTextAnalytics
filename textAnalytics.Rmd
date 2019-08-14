@@ -22,13 +22,6 @@ knitr::opts_chunk$set(echo = TRUE)
 - BoW approaches:
 
     - Sentiment analysis
-
-    - Topic modeling
-
-- SR approaches:
-
-    - Text generation
-
     
 **Text analytics** refers to applying statistical and machine learning techniques to extract useful insights from text 
 
@@ -403,30 +396,32 @@ How to use emojis?
 
 - use to support text sentiment classification
 
-[Emoji Sentiment Ranking](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0144296) is used to develop a sentiment map of the 751 most frequently used emojis. The sentiment of the emojis iscomputed from the sentiment of the tweets in which they occur.
+[Emoji Sentiment Ranking](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0144296) is used to develop a sentiment map of the 751 most frequently used emojis. The sentiment of the emojis is computed from the sentiment of the tweets in which they occur.
 
 ```{r echo=FALSE}
 knitr::include_graphics("image/emoji_stats.png")
 ```
 
+Visualization of emojis and sentiment:
+
+```{r echo=FALSE}
+knitr::include_graphics("image/vis_sentiment_emoji.png")
+```
+
+The more positive emojis are on the right-handside of the map (green), while the negative ones are on the left-hand side (red). The bubble sizes areproportional to the number of occurrences. The position of an emoji is determined by its sentiment scores and its neutrality
+
+
+Tweets with and without emojis (Welch’s t-test)
+
+- Tweets with and without emojis have significantly different sentiment means. 
+
+- Tweets with emojis are significantly more positive than the tweets without emojis.
+
+How emojis are associated with the sentiment of the text of tweets?
 
 ```{r echo=FALSE}
 knitr::include_graphics("image/emoji_sentiment_res.png")
 ```
+
 Emojis that occur at least 100 times in the Emoji Sentiment Ranking. Panel A: negative emojis,panel B: neutral (top) and bipolar (bottom) emojis, panel C: positive emojis.
-
-#Text generation
-
-`keras` package allows to use (Keras)[https://keras.io] and TensorFlow in R.
-
-Tutorials are available (here)[https://keras.rstudio.com/articles/getting_started.html#tutorials], including this (one)[https://keras.rstudio.com/articles/tutorial_basic_text_classification.html] on text classification.
-
-library(keras)
-library(tidyverse)
-library(janeaustenr)
-library(tokenizers)
-
-
-## Resources
-
 

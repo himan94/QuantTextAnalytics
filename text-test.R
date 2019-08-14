@@ -38,10 +38,15 @@ punctuation<-punctuation %>%
                            str_detect(title, "Dr. Jekyll") ~ "Dr. Jekyll and Mr. Hyde",
                            TRUE ~ title))
 
-punctuation %>%
+ggplot(mpg, aes(x=displ, y=displ, color=year))+geom_point()+ 
+  geom_smooth(method="gam")
+
+punctuation %>%ggplot(aes(x=token, y=n, color="red")) + geom_point() + geom_smooth()
   
+
+
   
-  ggplot(aes(token, n, fill = title)) +
+  ggplot(aes(token, n, fill = title, fill=)) +
   geom_col(alpha = 0.8, show.legend = FALSE) +
   coord_flip() +
   facet_wrap(~title, scales = "free_x") +
@@ -53,4 +58,35 @@ punctuation %>%
   labs(x = NULL, y = NULL,
        title = "Punctuation in literature",
        subtitle = "Commas are typically most common")
+
+#emojis
+library(jsonlite)
+emoji_data <- fromJSON("data/emoji.json")
+head(emoji_data)
+emoji_cat <- fromJSON("data/categories.json")
+
+
+
+library(tm)
+library(tidytext) 
+library(tidyverse) 
+library(quanteda)
+df <- as.data.frame(cbind(doc = c("doc1", "doc2"), text = c("the quick brown fox jumps over the lazy dog", "The quick brown foxy ox jumps over the lazy god")), stringsAsFactors = FALSE)
+
+df.count1 <- df %>% unnest_tokens(word, text) %>% 
+  count(doc, word) %>% 
+  bind_tf_idf(word, doc, n) %>% 
+  select(doc, word, tf_idf) %>% 
+  spread(word, tf_idf, fill = 0) 
+
+df.count2 <- df %>% unnest_tokens(word, text) %>% 
+  count(doc, word) %>% 
+  cast_dtm(document = doc,term = word, value = n, weighting = weightTfIdf) %>% 
+  as.matrix() %>% as.data.frame()
+
+df.count3 <- df %>% unnest_tokens(word, text) %>% 
+  count(doc, word) %>% 
+  cast_dfm(document = doc,term = word, value = n) %>% 
+  dfm_tfidf() %>% as.data.frame()
+
 

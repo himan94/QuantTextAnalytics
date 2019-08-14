@@ -9,44 +9,30 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Quantitative Text Analytics
+### Content
 
-*Content*
 - Text analytics and its use in business/business research
-- Basics
+
+### Basics
+
 - Available instruments: R packages and methods
+
 - Pre-processing:
-    - Keep or remove decision
-    - 
+
 - BoW approaches:
+
     - Sentiment analysis
+
     - Topic modeling
+
+- SR approaches:
+
+    - Text generation
+
     
-- SQ: `keras`
-
-- Pre-processing:
-
-
-### Valence shift
-
-
-Valence, as used in psychology, especially in discussing emotions, means the intrinsic attractiveness/"good"-ness (positive valence) or averseness/"bad"-ness (negative valence) of an event, object, or situation.[1] The term also characterizes and categorizes specific emotions. For example, emotions popularly referred to as "negative", such as anger and fear, have negative valence. Joy has positive valence. Positively valenced emotions are evoked by positively valenced events, objects, or situations. The term is also used to describe the hedonic tone of feelings, affect, certain behaviors (for example, approach and avoidance), goal attainment or nonattainment, and conformity with or violation of norms. Ambivalence can be viewed as conflict between positive and negative valence-carriers.[citation needed]
-
-
-`sentimentr`: built on `syuzhet` package, calculate text polarity sentiment at the sentence level and optionally aggregate by rows or grouping variable(s)
-
-Example: https://www.r-bloggers.com/handling-happy-vs-not-happy-better-sentiment-analysis-with-sentimentr-in-r/
-IMAGE - 
-
-
-
-
--------
-
 **Text analytics** refers to applying statistical and machine learning techniques to extract useful insights from text 
 
 The focus of my research is the use of text analytics for social media data. Businesses are excessively pressed for the need to engage with social media and explore its potential for stakeholders engagement, e.g. customers, shareholders. Companies target to monitor the social media space to understand customers' changes preferences, comptetitors offers, market trends, investors' sentiment.
-
 
 ```{r echo=FALSE, out.width=600, fig.cap="Text is messy, but tweets are messier! From https://blog.twitter.com"}
 knitr::include_graphics("image/twitter_language.png")
@@ -98,7 +84,6 @@ knitr::include_graphics("image/word_order.jpg")
 *Which token?*
 a sentence, word, n-gram, morpheme, letter
 
-
 **Term-document-matrix** (= document-feature matrix)
 
 - statistical measure that shows importance of a word is in  a document in a collection of documents (corpus)
@@ -129,15 +114,9 @@ most values of the dimensions are 0s, and only a few dimensions take on positive
     - Number of words -> dimensions of data
     - Most word frequences are zero
 
-
 **Language Modeling**: probabilistic models that are able to predict the next word in the sequence given the words that precede it.
 
 Uses: Machine Translation, spell Correction, speech Recognition, summarization, question answering, sentiment analysis etc.
-
-
-
-
-
 
 Depends on 
 - tasks
@@ -146,14 +125,14 @@ Depends on
 - preconditions
 
 
-## R Packages
+### R Packages
 
-- `tidytext`: (0.2.1 version)[https://cran.r-project.org/package=tidytext] 
+- `tidytext`: [0.2.1 version](https://cran.r-project.org/package=tidytext) 
     - new plotting functions
     - tokenizer for tweets
     - unnest_token has extra arguments for "tweets": `strip_punct` and `strip_url`.
 
--  `textdata`: `tidytext` uses it to access (lexicons)[https://github.com/EmilHvitfeldt/textdata]. Bing Liu lexicon (tidytext), AFINN (textdata), NRC lexicon (N/A)
+-  `textdata`: `tidytext` uses it to access [lexicons](https://github.com/EmilHvitfeldt/textdata). Bing Liu lexicon (tidytext), AFINN (textdata), NRC lexicon (N/A)
 
 *Changes*: licensing is fixed and the user needs to agree to dataset’s license/terms of use.
 
@@ -184,15 +163,32 @@ df.count3 <- df %>% unnest_tokens(word, text) %>%
   cast_dfm(document = doc,term = word, value = n) %>% 
   dfm_tfidf() %>% as.data.frame()
 
-
-
+df.count1
+df.count2
+df.count3
 ```
 
+## Get your data:
+Popular packages for working with Twitter : 
 
+- [twitteR](https://cran.r-project.org/web/packages/twitteR/README.html) - depricated, only REST API
 
+- [rtweet](https://rtweet.info/) REST API and stream API
+
+*Note*: Twitter limits downloading tweets on their Standard API and also puts a cap on the number of search resuts returned (18,000 every 15 minutes). To collect more than 7+ day data, use `cronjob` for Linux/Unix or the `scheduler` for Windows. See [here](https://cran.r-project.org/web/packages/cronR/README.html) on how to set up a cronjob
+
+```{r, echo=TRUE, error=FALSE, warning=FALSE, message=FALSE}
+#Let's load tweets downloaded earlier
+data <- read.csv("data/coffeeTweets.csv", encoding="UTF-8", stringsAsFactors=FALSE)
+dim(data)
+
+knitr::kable(data[1:3, 3:5], caption = 'Sample of downloaded data')
+
+```
 ## Text Preprocessing 
 
-* Get your data
+* Get your data: social media platforms, application approval may be required!
+
 * Preparation and cleaning
 * Segmentation
 * Tokenization
@@ -203,8 +199,8 @@ df.count3 <- df %>% unnest_tokens(word, text) %>%
     + Option 1 - tf df matrix:
     + Option 2 - tibble
     
-    
-    
+*See [tidy-text approach](https://www.tidytextmining.com/tidytext.html)*
+
 *Keep or remove?*
 Data mining preceeds text analytics and refers to cleaning and data preparation: transformation of the unstructured text into a structured data, e.g. tf-idf matrix. But.. is it all noise?
 
@@ -216,9 +212,6 @@ Data mining preceeds text analytics and refers to cleaning and data preparation:
 Paralanguage (paralinguistics) is a component of meta-communication that may modify meaning, give nuanced meaning, or convey emotion
 
 Textual paralanguage signals informality of the communication and has negative affect on perceptions of brand (company) competence. But when it is used by a brands spokescharacter, there is no negative effects as such communication is already perceived as informal.
-
-#IMAGE - most used # ? !
-
 
 ### Emojis
 
@@ -243,34 +236,155 @@ Traditionally thought of as a ultimate elevator pitch for [business promotion](h
 knitr::include_graphics("image/emojis_airbnb.png")
 ```
 
+```{r, echo=TRUE, error=FALSE, warning=FALSE, message=FALSE}
+
+library(emo)
+emo::ji("heart")
+emo::ji("ghost")
+
+emoji <- data %>%
+  mutate( 
+    emoji = ji_extract_all(text)
+  ) %>%
+  select(screen_name,emoji, text, created_at) %>% 
+  unnest(emoji) 
+
+knitr::kable(emoji[1:5,1:3], caption = 'Sample of emojis')
+``` 
+
 How-to:
 
 - extract emojis from tweets, use `stringr` 
 - use a dictionary to translate emojis - the "full" list of emojis are available [here](https://github.com/iamcal/emoji-data/blob/master/categories.json)
 - [categorise](https://emojipedia.org/) emojis - json file [here](https://github.com/iamcal/emoji-data/blob/master/categories.json)
 
-TOBEDONE-
-https://github.com/STATWORX/blog/blob/master/slackemoji/eval_emoji.R
+Read the emoji dictionary
 
+```{r, echo=TRUE, error=FALSE, warning=FALSE, message=FALSE, eval=FALSE}
 
-IMAGE: wordcloud of emojis
-IMAGE: most common emojis
+library(jsonlite)
+emoji_data <- fromJSON("data/emoji.json")
 
-IMAGE: most common categories
-knitr::include_graphics("top_image/emoji.png")
+emoji_cat <- fromJSON("data/categories.json")
+``` 
 
-#### Sentiment of emojis 
+or
+
+`emojis.csv` thanks to [Jessica Peterka-Bonetta] (http://opiateforthemass.es/articles/emoticons-in-R/)
+
+```{r, echo=TRUE, error=FALSE, warning=FALSE, message=FALSE, eval=TRUE}
+emoji_dic <- read.csv2("data/emojis.csv") %>% 
+  select(EN, ftu8, unicode) %>% 
+  rename(description = EN, r.encoding = ftu8)
+```
+```{r, echo=TRUE, error=FALSE, warning=FALSE, message=FALSE}
+knitr::kable(emoji_dic[1:5,], caption = 'Sample of emojis dictionary')
+
+```
+
+Once the matching was done everything else was like a breeze!
+
+From this we can rank emojis by occurence in data
+
+#### Sentiment analysis 
+
+sentiment analysis is to define automatic tools able to extract subjective information, such as opinions and sentiments from natural language texts and images. 
+
+How to:
+
+- Sentiment of the text is the sum of sentiments of individual words (BoW approach)
+
+- Based on sentiment lexicons
+
+- Based on single words. 
+
+Most common:
+
+[AFINN](http://www2.imm.dtu.dk/pubdb/views/publication_details.php?id=6010): a score between -5 (negative sentiment) and 5 (positive sentiment)
+
+[Bing](https://www.cs.uic.edu/~liub/FBS/sentiment-analysis.html): binary fashion into positive and negative categories
+
+[NRC](http://saifmohammad.com/WebPages/NRC-Emotion-Lexicon.htm): words are categorised into positive, negative, anger, anticipation, disgust, fear, joy, sadness, surprise, and trust.
+
+```{r, echo=TRUE, error=FALSE, warning=FALSE, message=FALSE, eval=FALSE}
+
+remove_reg <- "&amp;|&lt;|&gt;"
+tidy_tweets <- data %>% 
+  filter(!str_detect(text, "^RT")) %>%
+  mutate(text = str_remove_all(text, remove_reg)) %>%
+  unnest_tokens(word, text, token = "tweets") %>%
+  filter(!word %in% stop_words$word,
+         !word %in% str_remove_all(stop_words$word, "'"),
+         str_detect(word, "[a-z]"))
+```
+
+```{r, echo=TRUE, error=FALSE, warning=FALSE, message=FALSE, eval=TRUE}
+
+#Examples of dictionaries
+#Loughran and McDonald lexicon 
+get_sentiments("loughran")
+get_sentiments("loughran") %>%
+  count(sentiment, sort = TRUE)
+
+#Bing lexicon
+get_sentiments("bing") %>%
+  count(sentiment, sort = TRUE)
+```
+
+Adding sentiment to the dataset:
+
+```{r, echo=TRUE, error=FALSE, warning=FALSE, message=FALSE, eval=FALSE}
+tweets_sentiment <- tidy_tweets %>%
+  inner_join(get_sentiments("loughran"))  %>%
+  group_by(sentiment) %>% # group by sentiment type
+  tally %>% # counts number of rows
+  arrange(desc(n))
+
+ggpubr::ggpie(tweets_sentiment, "n", label = "sentiment", 
+              fill = "sentiment", color = "white", 
+              palette = "Spectral")
+
+#or lets investigate by top words use in each sentiment
+tidy_tweets %>%
+  inner_join(get_sentiments("loughran"))  %>%
+  count(sentiment, word) %>%
+  filter(sentiment %in% c("positive", "negative", 
+                          "uncertainty", "litigious")) %>%
+  group_by(sentiment) %>%
+  top_n(15) %>%
+  ungroup %>%
+  mutate(word = reorder(word, n)) %>%
+  mutate(sentiment = factor(sentiment, levels = c("negative",
+                                                  "positive",
+                                                  "uncertainty",
+                                                  "litigious"))) %>%
+  ggplot(aes(word, n, fill = sentiment)) +
+  geom_col(alpha = 0.8, show.legend = FALSE) +
+  coord_flip() +
+  scale_y_continuous(expand = c(0,0)) +
+  facet_wrap(~sentiment, scales = "free") +
+  labs(x = NULL, y = "Total number of occurrences",
+       title = "Words driving sentiment scores in coffee",
+       subtitle = "From the Loughran-McDonald lexicon")
+```
+
+For social media: "traditional" sentiment analysis approaches does not!
+
+```{r echo=FALSE}
+knitr::include_graphics("image/tweet_sentiment.png")
+```
+
+- short/abbreviated
+- informal linguistic
+- non-standard English
+
+Resources: [Twitter Dictionary aka Twittonary](https://twittonary.com/) and [Twerminology - Twitter Slang Words & Abbreviations] (https://www.webopedia.com/quick_ref/Twitter_Dictionary_Guide.asp)
 
 Used in tweets emojis serve a paralanguage function. They are a powerful toolcapable of chaning the meaning of the message:
 
 ```{r echo=FALSE, out.width=300}
 knitr::include_graphics("image/emoji_sentiment.jpg")
 ```
-
-Let's analyse the sentiment of tweets and compare to 
-
-https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4671607/
--TOBEDONE
 
 **Note**: Apart from paralanguage function of emojis, differences exist in how people perceive them!
 A recent study from the University of Minnesota used  that 25 most popular emojis that looked like human faces and asked participants to look at five variations for each one, taken from Apple, Microsoft, and Android.
@@ -281,71 +395,25 @@ The participants were asked to rate each emoji's emotional meaning on a scale of
 knitr::include_graphics("image/emoji_diff.png")
 ```
 
-tf df matrix approach:
+How to use emojis?
 
-* Stemming / 
-* POS tagging
-* Create text corpus
-* Term-Document matrix
+- discard (?!)
 
+- generate a training corpus 
 
+- use to support text sentiment classification
 
+[Emoji Sentiment Ranking](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0144296) is used to develop a sentiment map of the 751 most frequently used emojis. The sentiment of the emojis iscomputed from the sentiment of the tweets in which they occur.
 
-
-
-
-
-
-#BoW approaches
-##Sentiment
-## text polarity sentiment
-
-***
-### Dealing with unstructured data 
+```{r echo=FALSE}
+knitr::include_graphics("image/emoji_stats.png")
+```
 
 
-***
-### Effective workflow for text analytics
-
-Types of input:
-
-knitr::include_graphics("image/SQ_app.jpg")
-
-*Approaches*
-* Modeling: inferential models, predictive models or prescriptive models
-* Training and evaluation of models
-* Application of these Models
-* Visualization
-* Google Cloud - Natural language API
-
-
-
-*Correspondence Analysis*: 
-a data science tool for summarizing tables
-scaling documents on multiple dimensions
-
-
-
-SQ: 
-Machine Language Translation
-
-Text summarization: customer complaints, customer feedback, monitoring compliance based call, chat monitoring.
-
-Chatbot 
-
-
-
-Examples of text analytics: association analysis:
-
-* visualization
-* predictive analytics
-* information retrieval
-* lexical analysis
-* pattern recognition
-* tagging/annotation
-
-
-
+```{r echo=FALSE}
+knitr::include_graphics("image/emoji_sentiment_res.png")
+```
+Emojis that occur at least 100 times in the Emoji Sentiment Ranking. Panel A: negative emojis,panel B: neutral (top) and bipolar (bottom) emojis, panel C: positive emojis.
 
 #Text generation
 

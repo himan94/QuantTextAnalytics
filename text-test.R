@@ -89,4 +89,8 @@ df.count3 <- df %>% unnest_tokens(word, text) %>%
   cast_dfm(document = doc,term = word, value = n) %>% 
   dfm_tfidf() %>% as.data.frame()
 
+install.packages("itunesr")
+library(itunesr)
+uber_reviews <- getReviews(368677368,'us',1)
+
 

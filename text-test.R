@@ -89,8 +89,34 @@ df.count3 <- df %>% unnest_tokens(word, text) %>%
   cast_dfm(document = doc,term = word, value = n) %>% 
   dfm_tfidf() %>% as.data.frame()
 
+
+#=====================
 install.packages("itunesr")
 library(itunesr)
 uber_reviews <- getReviews(368677368,'us',1)
+reviews1 <- getReviews("297606951", "us", 1)
+reviews2 <- getReviews("297606951", "us", 2)
+
+reviews <- rbind(reviews1, reviews2)
+reviews_neg <- reviews[reviews$Rating %in% c('1','2'),]
+
+
+doc <- udpipe::udpipe_annotate(model, reviews_neg$Review)
+amazon_reviews <- getReviews(297606951,'us',1)
+
+install.packages("udpipe")
+library(udpipe)
+en <- udpipe::udpipe_download_model("english")
+
+model <- udpipe_load_model("english-ewt-ud-2.4-190531.udpipe")
+
+doc <- udpipe::udpipe_annotate(model, reviews_neg$Review)
+
+names(as.data.frame(doc))
+
+doc_df <- as.data.frame(doc)
+
+topics <- keywords_rake(x = doc_df, term = "lemma", group = "doc_id", 
+                        relevant = doc_df$upos %in% c("NOUN", "ADJ"))
 
 
